@@ -1,986 +1,558 @@
-
 <!DOCTYPE html>
 <html lang="uz">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bellissimo Pizza | Buyurtma berish</title>
-
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Inter', sans-serif;
-        }
-
-        html {
-            scroll-behavior: smooth;
-        }
-
-        body {
-            background: #fff;
-            color: #202020;
-        }
-
-        a {
-            text-decoration: none;
-            color: inherit;
-        }
-
-        button {
-            cursor: pointer;
-            font-family: inherit;
-        }
-
-        /* HEADER */
-
-        header {
-            width: 100%;
-            background: #fff;
-            padding: 17px 7%;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            border-bottom: 1px solid #eee;
-        }
-
-        .logo {
-            font-size: 27px;
-            font-weight: 900;
-            color: #e52332;
-            letter-spacing: -1.5px;
-        }
-
-        .logo span {
-            color: #252525;
-        }
-
-        .nav {
-            display: flex;
-            align-items: center;
-            gap: 27px;
-        }
-
-        .nav a {
-            font-size: 13px;
-            font-weight: 600;
-            transition: .3s;
-        }
-
-        .nav a:hover {
-            color: #e52332;
-        }
-
-        .header-right {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-
-        .location {
-            font-size: 12px;
-            color: #777;
-        }
-
-        .cart-btn {
-            background: #e52332;
-            color: white;
-            border: none;
-            border-radius: 10px;
-            padding: 13px 19px;
-            font-weight: 700;
-        }
-
-        .cart-btn:hover {
-            background: #bd1725;
-        }
-
-        /* HERO */
-
-        .hero {
-            margin: 25px auto;
-            width: 86%;
-            min-height: 390px;
-            border-radius: 22px;
-            overflow: hidden;
-            position: relative;
-            background:
-                linear-gradient(90deg, #171717 0%, #171717e8 40%, #17171700 100%),
-                url("https://images.unsplash.com/photo-1513104890138-7c749659a591?w=1500")
-                center/cover;
-            display: flex;
-            align-items: center;
-            padding: 55px;
-            color: white;
-        }
-
-        .hero-content {
-            max-width: 480px;
-        }
-
-        .hero-content .tag {
-            display: inline-block;
-            color: #fff;
-            background: #e52332;
-            padding: 8px 15px;
-            border-radius: 6px;
-            font-size: 11px;
-            font-weight: 800;
-            letter-spacing: 1px;
-        }
-
-        .hero h1 {
-            font-size: clamp(35px, 5vw, 55px);
-            line-height: 1.15;
-            margin: 20px 0;
-            font-weight: 900;
-        }
-
-        .hero h1 span {
-            color: #ff3948;
-        }
-
-        .hero p {
-            color: #ddd;
-            font-size: 14px;
-            line-height: 1.8;
-            margin-bottom: 25px;
-        }
-
-        .hero-btn {
-            display: inline-block;
-            background: #e52332;
-            padding: 15px 27px;
-            border-radius: 9px;
-            font-size: 13px;
-            font-weight: 800;
-            transition: .3s;
-        }
-
-        .hero-btn:hover {
-            background: #fff;
-            color: #e52332;
-        }
-
-        /* CATEGORIES */
-
-        .categories {
-            width: 86%;
-            margin: 55px auto 35px;
-        }
-
-        .section-heading {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 25px;
-        }
-
-        .section-heading h2 {
-            font-size: 27px;
-            font-weight: 900;
-        }
-
-        .section-heading h2 span {
-            color: #e52332;
-        }
-
-        .category-list {
-            display: flex;
-            gap: 12px;
-            overflow-x: auto;
-            padding-bottom: 12px;
-        }
-
-        .category-list::-webkit-scrollbar {
-            height: 4px;
-        }
-
-        .category-list::-webkit-scrollbar-thumb {
-            background: #ddd;
-            border-radius: 10px;
-        }
-
-        .category {
-            border: 1px solid #eee;
-            background: #fff;
-            border-radius: 12px;
-            padding: 15px 22px;
-            white-space: nowrap;
-            font-size: 13px;
-            font-weight: 700;
-            transition: .3s;
-        }
-
-        .category:hover,
-        .category.active {
-            background: #e52332;
-            color: white;
-            border-color: #e52332;
-        }
-
-        /* PRODUCTS */
-
-        .products {
-            width: 86%;
-            margin: 50px auto 80px;
-        }
-
-        .product-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 22px;
-        }
-
-        .product {
-            border: 1px solid #eee;
-            border-radius: 17px;
-            overflow: hidden;
-            background: white;
-            transition: .3s;
-        }
-
-        .product:hover {
-            transform: translateY(-7px);
-            box-shadow: 0 12px 35px #00000012;
-        }
-
-        .product-img {
-            width: 100%;
-            height: 200px;
-            overflow: hidden;
-            background: #fafafa;
-        }
-
-        .product-img img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: .4s;
-        }
-
-        .product:hover .product-img img {
-            transform: scale(1.08);
-        }
-
-        .product-info {
-            padding: 18px;
-        }
-
-        .product-info h3 {
-            font-size: 17px;
-            font-weight: 800;
-            margin-bottom: 10px;
-        }
-
-        .product-info p {
-            color: #888;
-            font-size: 12px;
-            line-height: 1.7;
-            height: 42px;
-            overflow: hidden;
-        }
-
-        .product-bottom {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-top: 18px;
-        }
-
-        .price {
-            font-size: 16px;
-            font-weight: 900;
-            color: #222;
-        }
-
-        .add-btn {
-            width: 39px;
-            height: 39px;
-            border: none;
-            border-radius: 10px;
-            background: #e52332;
-            color: white;
-            font-size: 23px;
-            font-weight: 600;
-            transition: .3s;
-        }
-
-        .add-btn:hover {
-            background: #202020;
-        }
-
-        /* PROMO */
-
-        .promo {
-            width: 86%;
-            margin: 0 auto 75px;
-            padding: 50px;
-            border-radius: 20px;
-            background: #e52332;
-            color: white;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 25px;
-        }
-
-        .promo h2 {
-            font-size: 32px;
-            font-weight: 900;
-            margin-bottom: 12px;
-        }
-
-        .promo p {
-            font-size: 13px;
-            color: #ffe4e6;
-        }
-
-        .promo a {
-            background: white;
-            color: #e52332;
-            padding: 15px 25px;
-            border-radius: 10px;
-            font-size: 13px;
-            font-weight: 800;
-            white-space: nowrap;
-        }
-
-        /* ABOUT */
-
-        .about {
-            text-align: center;
-            padding: 70px 10%;
-            background: #fafafa;
-        }
-
-        .about h2 {
-            font-size: 30px;
-            font-weight: 900;
-        }
-
-        .about h2 span {
-            color: #e52332;
-        }
-
-        .about p {
-            max-width: 700px;
-            margin: 20px auto 0;
-            font-size: 13px;
-            line-height: 2;
-            color: #777;
-        }
-
-        /* FOOTER */
-
-        footer {
-            background: #1c1c1c;
-            color: white;
-            padding: 50px 7% 20px;
-        }
-
-        .footer-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 40px;
-            margin-bottom: 40px;
-        }
-
-        footer h3 {
-            font-size: 18px;
-            margin-bottom: 20px;
-        }
-
-        footer p,
-        footer a {
-            display: block;
-            color: #aaa;
-            font-size: 12px;
-            margin: 12px 0;
-        }
-
-        footer a:hover {
-            color: #e52332;
-        }
-
-        .copyright {
-            border-top: 1px solid #383838;
-            padding-top: 20px;
-            text-align: center;
-            font-size: 11px;
-            color: #888;
-        }
-
-        /* CART MODAL */
-
-        .cart-panel {
-            position: fixed;
-            top: 0;
-            right: -420px;
-            width: 380px;
-            max-width: 100%;
-            height: 100vh;
-            background: white;
-            z-index: 300;
-            padding: 25px;
-            box-shadow: -5px 0 30px #0002;
-            transition: .35s;
-        }
-
-        .cart-panel.open {
-            right: 0;
-        }
-
-        .cart-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding-bottom: 20px;
-            border-bottom: 1px solid #eee;
-        }
-
-        .close-cart {
-            background: none;
-            border: none;
-            font-size: 27px;
-        }
-
-        .cart-items {
-            padding: 20px 0;
-            max-height: 65vh;
-            overflow-y: auto;
-        }
-
-        .cart-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 10px;
-            padding: 13px 0;
-            border-bottom: 1px solid #eee;
-            font-size: 13px;
-        }
-
-        .remove-btn {
-            border: none;
-            background: #fff0f0;
-            color: #e52332;
-            border-radius: 6px;
-            padding: 7px;
-        }
-
-        .cart-total {
-            font-size: 17px;
-            font-weight: 900;
-            padding: 20px 0;
-        }
-
-        .empty {
-            color: #999;
-            text-align: center;
-            padding: 40px 0;
-            font-size: 14px;
-        }
-
-        .overlay {
-            position: fixed;
-            inset: 0;
-            background: #0008;
-            z-index: 200;
-            display: none;
-        }
-
-        .overlay.show {
-            display: block;
-        }
-
-        /* RESPONSIVE */
-
-        @media(max-width: 1050px) {
-            .product-grid {
-                grid-template-columns: repeat(3, 1fr);
-            }
-
-            .nav {
-                gap: 13px;
-            }
-        }
-
-        @media(max-width: 750px) {
-            header {
-                flex-wrap: wrap;
-                gap: 15px;
-                padding: 15px 5%;
-            }
-
-            .nav {
-                order: 3;
-                width: 100%;
-                justify-content: center;
-                flex-wrap: wrap;
-            }
-
-            .location {
-                display: none;
-            }
-
-            .hero {
-                width: 92%;
-                min-height: 350px;
-                padding: 30px;
-            }
-
-            .categories,
-            .products,
-            .promo {
-                width: 92%;
-            }
-
-            .product-grid {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 12px;
-            }
-
-            .product-img {
-                height: 150px;
-            }
-
-            .product-info {
-                padding: 12px;
-            }
-
-            .product-info h3 {
-                font-size: 14px;
-            }
-
-            .price {
-                font-size: 13px;
-            }
-
-            .promo {
-                flex-direction: column;
-                text-align: center;
-                padding: 35px 20px;
-            }
-
-            .footer-grid {
-                grid-template-columns: 1fr;
-                gap: 20px;
-            }
-        }
-
-        @media(max-width: 400px) {
-            .logo {
-                font-size: 22px;
-            }
-
-            .cart-btn {
-                padding: 10px;
-                font-size: 12px;
-            }
-
-            .product-grid {
-                grid-template-columns: 1fr 1fr;
-            }
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bellissimo Pizza | Rasmiy menyu</title>
+<link rel="stylesheet" href="style.css">
+<link rel="icon" href="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSIeV7OsqrTrGJ7TIidS-FCgpu6OQg-rhDV45peiJSIXpaxbT00eqbWH0g&s=10">
+<script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+<script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 </head>
-
 <body>
+<div id="root"></div>
 
-    <!-- HEADER -->
+<script type="text/babel">
 
-    <header>
+const {useState} = React;
 
-        <a href="#home" class="logo">
-            Bellissimo<span>.</span>
-        </a>
+// MAHSULOTLAR
 
-        <nav class="nav">
-            <a href="#home">Bosh sahifa</a>
-            <a href="#categories">Kategoriyalar</a>
-            <a href="#products">Menyu</a>
-            <a href="#about">Biz haqimizda</a>
+const data = {
+"Kombo": [
+["Katta Kombo",125000,"Pitsa, fri va ichimlik."],
+["Do‘stlar Kombosi",159000,"Do‘stlar uchun katta to‘plam."],
+["Mini Kombo",65000,"Kichik pitsa va ichimlik."],
+["Family Kombo",199000,"Oila uchun mazali to‘plam."],
+["Lunch Kombo",89000,"Tushlik uchun maxsus kombo."],
+["Chicken Kombo",99000,"Tovuq va kartoshka fri."],
+["Pizza Duo",145000,"Ikki xil pitsa va ichimlik."],
+["Party Kombo",249000,"Bayram uchun katta to‘plam."]
+],
+
+"Pitsa": [
+["Margarita",55000,"Pomidor sousi va mozzarella."],
+["Pepperoni",69000,"Pepperoni kolbasasi va pishloq."],
+["4 Pishloqli",75000,"To‘rt xil pishloq bilan."],
+["Go‘shtli pitsa",72000,"Go‘sht, pishloq va maxsus sous."],
+["BBQ Chicken",79000,"Tovuq go‘shti va BBQ sousi."],
+["Vegetarian",62000,"Yangi sabzavotlar va pishloq."],
+["Hawaiian",70000,"Tovuq va ananas."],
+["Mexican",77000,"Achchiq sous va go‘sht."],
+["Chicken Cheese",74000,"Tovuq va ko‘p pishloq."],
+["Super Meat",85000,"Bir necha xil go‘sht bilan."],
+["Mushroom",68000,"Qo‘ziqorin va mozzarella."],
+["Double Cheese",80000,"Ikki barobar pishloq."],
+["Classic",59000,"Klassik italyancha ta'm."],
+["Spicy Pizza",73000,"Achchiq sous va kolbasa."],
+["Salami",71000,"Salami va pishloq."]
+],
+
+"Gazaklar": [
+["Kartoshka fri",18000,"Qarsildoq kartoshka."],
+["Chicken Strips",32000,"Tovuq go‘shtidan gazak."],
+["Nuggets",28000,"Mazali tovuq nuggets."],
+["Pishloqli tayoqchalar",30000,"Qarsildoq pishloqli gazak."],
+["Chicken Wings",39000,"Tovuq qanotlari."],
+["Onion Rings",22000,"Piyoz halqachalari."],
+["Hot Dog",25000,"Kolbasali issiq sendvich."],
+["Burger",42000,"Go‘shtli burger."],
+["Club Sandwich",35000,"Tovuq va sabzavotli sendvich."],
+["Lavash",38000,"Go‘sht va sabzavotli lavash."]
+],
+
+"Ichimliklar": [
+["Coca-Cola",12000,"Sovuq Coca-Cola."],
+["Fanta",12000,"Apelsin ta'mli ichimlik."],
+["Sprite",12000,"Limon ta'mli ichimlik."],
+["Apelsin sharbati",16000,"Apelsin sharbati."],
+["Mineral suv",6000,"Toza ichimlik suvi."],
+["Ice Tea",14000,"Muzdek choy."],
+["Limonad",18000,"Yangi limonad."],
+["Milkshake",25000,"Sutli kokteyl."]
+],
+
+"Salatlar": [
+["Sezar salati",35000,"Tovuq va maxsus sous."],
+["Greek Salad",32000,"Pomidor, bodring va pishloq."],
+["Fresh Salad",25000,"Yangi sabzavotli salat."],
+["Chicken Salad",37000,"Tovuq go‘shtli salat."],
+["Vegetable Salad",22000,"Sabzavotlardan tayyorlangan."],
+["Corn Salad",28000,"Makkajo‘xori va sabzavotlar."]
+],
+
+"Desertlar": [
+["Shokoladli tort",25000,"Shokoladli mazali tort."],
+["Cheesecake",30000,"Yumshoq pishloqli desert."],
+["Donut",18000,"Shirin va yumshoq donut."],
+["Muffin",16000,"Shokoladli muffin."],
+["Ice Cream",15000,"Muzqaymoq."],
+["Brownie",22000,"Shokoladli brownie."],
+["Tiramisu",28000,"Italyancha desert."]
+],
+
+"Souslar": [
+["Sarimsoqli sous",5000,"Sarimsoq ta'mli sous."],
+["Pishloqli sous",6000,"Yumshoq pishloqli sous."],
+["BBQ sous",5000,"BBQ ta'mli sous."],
+["Ketchup",4000,"Pomidorli ketchup."],
+["Mayonez",4000,"Klassik mayonez."],
+["Achchiq sous",5000,"Achchiq sous."]
+]
+};
+
+// RASMLAR
+
+const drinkImages = {
+"Coca-Cola": "https://images.unsplash.com/photo-1554866585-cd94860890b7?w=600",
+"Fanta": "https://i0.wp.com/delicatessen.uz/wp-content/uploads/2023/08/napitok-gazirovannyj-fanta-orange-330-ml.jpg?fit=1000%2C1000&ssl=1",
+"Sprite": "https://totalbooze.com/cdn/shop/files/sprite-soda-12oz-5113881.png?v=1774649648&width=1500",
+"Apelsin sharbati": "https://images.unsplash.com/photo-1600271886742-f049cd451bba?w=600",
+"Mineral suv": "https://images.unsplash.com/photo-1523362628745-0c100150b504?w=600",
+"Ice Tea": "https://images.unsplash.com/photo-1556679343-c7306c1976bc?w=600",
+"Limonad": "https://art-lunch.ru/content/uploads/2020/08/citrus-lemonade-001.jpg",
+"Milkshake": "https://images.unsplash.com/photo-1572490122747-3968b75cc699?w=600"
+};
+
+// Pitsa rasmlari to'g'ridan-to'g'ri ishonchli va mazali pitsa havolalari bilan almashtirildi
+const foodImages = [
+"https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=600",
+"https://images.unsplash.com/photo-1513104890138-7c749659a591?w=600",
+"https://io.bellissimo.uz/images/cc8d6105-f4a8-4863-b831-2fd9458104d6.png?v=1761633184",
+"https://images.unsplash.com/photo-1571407970349-bc81e7e96d47?w=600",
+"https://images.unsplash.com/photo-1565299585323-38d6b0865b47?w=600",
+"https://images.unsplash.com/photo-1604382355076-af4b0eb60143?w=600",
+"https://images.unsplash.com/photo-1593560708920-61dd98c46a4e?w=600",
+"https://images.unsplash.com/photo-1574071318508-1cdbab80d002?w=600",
+"https://images.unsplash.com/photo-1541745537411-b8046dc6d66c?w=600",
+"https://images.unsplash.com/photo-1534308983496-4fabb1a015ee?w=600",
+"https://io.bellissimo.uz/images/30614a92-303e-4c7a-a4fc-d6183f71c004.jpg?v=1752581888",
+"https://images.unsplash.com/photo-1544982503-9f984c14501a?w=600",
+"https://images.unsplash.com/photo-1513104890138-7c749659a591?w=600",
+"https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=600",
+"https://images.unsplash.com/photo-1571407970349-bc81e7e96d47?w=600"
+];
+
+const categoryImages = {
+"Kombo": [
+"https://bellissimo.uz/_next/image?url=https%3A%2F%2Fio.bellissimo.uz%2Fimages%2F44730000-0f48-3056-824b-08def060eaed.jpg%3Fv%3D1785653070&w=1920&q=75",
+"https://bellissimo.uz/_next/image?url=https%3A%2F%2Fio.bellissimo.uz%2Fimages%2Ff8990000-6beb-ac1f-4056-08dc575e681f.jpg%3Fv%3D1778067163&w=1920&q=75",
+"https://images.unsplash.com/photo-1571407970349-bc81e7e96d47?w=600",
+"https://bellissimo.uz/_next/image?url=https%3A%2F%2Fio.bellissimo.uz%2Fimages%2F44730000-0f48-3056-fad2-08dee0a20301.jpg%3Fv%3D1791550748&w=1920&q=75",
+"https://images.unsplash.com/photo-1574071318508-1cdbab80d002?w=600",
+"https://images.unsplash.com/photo-1593560708920-61dd98c46a4e?w=600",
+"https://images.unsplash.com/photo-1579751626657-72bc17010498?w=600",
+"https://images.unsplash.com/photo-1571407970349-bc81e7e96d47?w=600"
+],
+"Pitsa": foodImages,
+"Gazaklar": [
+"https://images.unsplash.com/photo-1573080496219-bb080dd4f877?w=600",
+"https://images.unsplash.com/photo-1562967914-608f82629710?w=600",
+"https://images.unsplash.com/photo-1566478989037-eec170784d0b?w=600",
+"https://images.unsplash.com/photo-1630384060421-cb20d0e0649d?w=600",
+"https://images.unsplash.com/photo-1527477396000-e27163b481c2?w=600",
+"https://images.unsplash.com/photo-1639024471283-03518883512d?w=600",
+"https://images.unsplash.com/photo-1619740455993-9e612b1af08a?w=600",
+"https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=600",
+"https://images.unsplash.com/photo-1528735602780-2552fd46c7af?w=600",
+"https://img.magnific.com/free-photo/shaurma-with-veegtables-chicken-wrapped-with-lavash-bread_114579-2624.jpg?semt=ais_hybrid&w=740&q=80"
+],
+"Salatlar": [
+"https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=600",
+"https://images.unsplash.com/photo-1540189549336-e6e99c3679fe?w=600",
+"https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=600&sat=-20",
+"https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=600",
+"https://images.unsplash.com/photo-1540420773420-3366772f4999?w=600",
+"https://images.unsplash.com/photo-1515543904379-3d757afe72e4?w=600"
+],
+"Desertlar": [
+"https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=600",
+"https://images.unsplash.com/photo-1533134242443-d4fd215305ad?w=600",
+"https://images.unsplash.com/photo-1551024506-0bccd828d307?w=600",
+"https://images.unsplash.com/photo-1607958996333-41aef7caefaa?w=600",
+"https://images.unsplash.com/photo-1563805042-7684c019e1cb?w=600",
+"https://images.unsplash.com/photo-1606313564200-e75d5e30476c?w=600",
+"https://images.unsplash.com/photo-1571877227200-a0d98ea607e9?w=600"
+],
+"Souslar": [
+"https://cdn.delever.uz/delever/6a2a2351-91b1-44db-a497-6dcc60a5876f",
+"https://images.gastronom.ru/gD-0D80SW4Iz3Xosm-VYhei7dlyjh3_aca77e-ZqluQ/pr:article-cover-image/g:ce/rs:auto:0:0:0/L2Ntcy9hbGwtaW1hZ2VzLzE4YWMyM2JlLTE2YjktNDMxNC04MGMxLWFjMWUxYmI1YTk3NS5qcGc.webp",
+"https://www.marthastewart.com/thmb/kT_0STKvaZr5YJ_kxITFC65miic=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/MSL-312812-quick-bbq-sauce-hero-horiz-0623-d11e3d48c8a74744acdd992d5d791990.jpg",
+"https://images.unsplash.com/photo-1472476443507-c7a5948772fc?w=600&sat=20",
+"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSE7DkITztdgZz1mrQ6s8QKktzp7VLVSvTUuo0L8J59yO_-y16rfBdwvm9p&s=10",
+"https://shuba.life/static/content/thumbs/384x240/3/bd/tizvrv---c8x5x50px50p-up--90e80608c0909b3532fc506652ff3bd3.jpg"
+]
+};
+
+// Mahsulotlarga rasm biriktirish
+
+let id = 0;
+
+const products = Object.entries(data).flatMap(([category,items]) =>
+  items.map((item,index) => {
+    id++;
+
+    let image;
+
+    if(category === "Ichimliklar") {
+      image = drinkImages[item[0]];
+    } else {
+      image = categoryImages[category]?.[index];
+    }
+
+    return {
+      id,
+      name: item[0],
+      price: item[1],
+      description: item[2],
+      category,
+      image
+    };
+  })
+);
+
+const categories = [
+"Barchasi","Kombo","Pitsa","Gazaklar",
+"Ichimliklar","Salatlar","Desertlar","Souslar"
+];
+
+function formatPrice(price) {
+  return price.toLocaleString("uz-UZ") + " so'm";
+}
+
+// APP
+
+function App() {
+
+  const [category,setCategory] = useState("Barchasi");
+  const [search,setSearch] = useState("");
+  const [cart,setCart] = useState([]);
+  const [cartOpen,setCartOpen] = useState(false);
+
+  const filteredProducts = products.filter(product => {
+    const categoryMatch =
+      category === "Barchasi" || product.category === category;
+
+    const searchMatch =
+      product.name.toLowerCase().includes(search.toLowerCase());
+
+    return categoryMatch && searchMatch;
+  });
+
+  function addToCart(product) {
+    setCart(previous => {
+      const found = previous.find(item => item.id === product.id);
+
+      if(found) {
+        return previous.map(item =>
+          item.id === product.id
+            ? {...item,quantity:item.quantity+1}
+            : item
+        );
+      }
+
+      return [...previous,{...product,quantity:1}];
+    });
+  }
+
+  function changeQuantity(id,amount) {
+    setCart(previous =>
+      previous
+        .map(item =>
+          item.id === id
+            ? {...item,quantity:item.quantity+amount}
+            : item
+        )
+        .filter(item => item.quantity > 0)
+    );
+  }
+
+  const total = cart.reduce(
+    (sum,item) => sum + item.price * item.quantity, 0
+  );
+
+  const cartCount = cart.reduce(
+    (sum,item) => sum + item.quantity, 0
+  );
+
+  return (
+    <>
+
+      <header>
+        <div className="logo">🍕 BELLISSIMO PIZZA</div>
+
+        <nav>
+          <a href="#home">Bosh sahifa</a>
+          <a href="#menu">Menyu</a>
+          <a href="#about">Biz haqimizda</a>
         </nav>
 
-        <div class="header-right">
-            <span class="location">📍 Toshkent</span>
-            <button class="cart-btn" onclick="openCart()">
-                🛒 Savatcha <span id="cart-count">0</span>
-            </button>
+        <button className="cart-button"
+          onClick={() => setCartOpen(true)}>
+          🛒 Savatcha ({cartCount})
+        </button>
+      </header>
+
+      <section className="hero" id="home">
+        <div className="hero-content">
+          <span className="hero-label">BELLISSIMO PIZZA</span>
+
+          <h1>Eng mazali pitsa sizni kutmoqda!</h1>
+
+          <p>
+            Sevimli taomingizni tanlang. Yangi tayyorlangan
+            mazali pitsalar va boshqa taomlar sizni kutmoqda.
+          </p>
+
+          <a href="#menu" className="hero-button">
+            Menyuni ko‘rish →
+          </a>
         </div>
+      </section>
 
-    </header>
+      <main className="container" id="menu">
 
-    <!-- HERO -->
-
-    <section class="hero" id="home">
-
-        <div class="hero-content">
-
-            <span class="tag">BELLISSIMO PIZZA</span>
-
-            <h1>
-                Mazali ta'm,
-                <span>ajoyib kayfiyat!</span>
-            </h1>
-
-            <p>
-                Sevimli pizzangizni tanlang.
-                Yangi masalliqlar va ajoyib ta'm
-                sizni kutmoqda!
+        <div className="section-heading">
+          <div>
+            <h2 className="section-title">Bizning menyu 🍕</h2>
+            <p className="section-subtitle">
+              Sevimli taomingizni tanlang
             </p>
-
-            <a href="#products" class="hero-btn">
-                Menyuni ko'rish →
-            </a>
-
+          </div>
         </div>
 
-    </section>
-
-    <!-- CATEGORIES -->
-
-    <section class="categories" id="categories">
-
-        <div class="section-heading">
-            <h2>Bizning <span>menyu</span></h2>
+        <div className="categories">
+          {categories.map(item => (
+            <button
+              key={item}
+              className={category === item ? "category active" : "category"}
+              onClick={() => setCategory(item)}
+            >
+              {item}
+            </button>
+          ))}
         </div>
 
-        <div class="category-list">
-
-            <button class="category active" onclick="filterProducts('all', this)">Hammasi</button>
-            <button class="category" onclick="filterProducts('combo', this)">🔥 Kombo</button>
-            <button class="category" onclick="filterProducts('pizza', this)">🍕 Pitsa</button>
-            <button class="category" onclick="filterProducts('snack', this)">🍟 Gazaklar</button>
-            <button class="category" onclick="filterProducts('drink', this)">🥤 Ichimliklar</button>
-            <button class="category" onclick="filterProducts('salad', this)">🥗 Salatlar</button>
-            <button class="category" onclick="filterProducts('dessert', this)">🍰 Desertlar</button>
-
+        <div className="search-wrapper">
+          <span className="search-icon">⌕</span>
+          <input
+            className="search"
+            type="search"
+            placeholder="Mahsulot nomini qidiring..."
+            value={search}
+            onChange={e => setSearch(e.target.value)}
+          />
         </div>
 
-    </section>
+        <div className="products">
 
-    <!-- PRODUCTS -->
+          {filteredProducts.length ? (
+            filteredProducts.map(product => (
+              <article className="product" key={product.id}>
 
-    <section class="products" id="products">
+                <img
+                  className="product-image"
+                  src={product.image}
+                  alt={product.name}
+                  loading="lazy"
+                  onError={e => {
+                    e.currentTarget.onerror = null;
+                    e.currentTarget.src =
+                      "https://placehold.co/600x400/f1f1f1/555?text=" +
+                      encodeURIComponent(product.name);
+                  }}
+                />
 
-        <div class="section-heading">
-            <h2>Ommabop <span>mahsulotlar</span></h2>
-        </div>
+                <div className="product-info">
+                  <h3>{product.name}</h3>
 
-        <div class="product-grid" id="product-grid">
+                  <p className="description">
+                    {product.description}
+                  </p>
 
-            <div class="product" data-category="pizza">
-                <div class="product-img">
-                    <img src="https://images.unsplash.com/photo-1571407970349-bc81e7e96d47?w=600" alt="Pepperoni">
+                  <div className="product-bottom">
+                    <span className="price">
+                      {formatPrice(product.price)}
+                    </span>
+
+                    <button
+                      className="add-button"
+                      onClick={() => addToCart(product)}
+                    >
+                      + Qo‘shish
+                    </button>
+                  </div>
                 </div>
-                <div class="product-info">
-                    <h3>Pepperoni</h3>
-                    <p>Pepperoni, mozzarella pishlog'i va pomidor sousi.</p>
-                    <div class="product-bottom">
-                        <span class="price">75 000 so'm</span>
-                        <button class="add-btn" onclick="addToCart('Pepperoni', 75000)">+</button>
+
+              </article>
+            ))
+          ) : (
+            <p className="empty">
+              😕 Mahsulot topilmadi. Boshqa nom bilan qidirib ko‘ring.
+            </p>
+          )}
+
+        </div>
+      </main>
+
+      {/* SAVATCHA */}
+
+      {cartOpen && (
+        <>
+          <div className="cart-overlay"
+            onClick={() => setCartOpen(false)}>
+          </div>
+
+          <aside className="cart-panel">
+
+            <div className="cart-header">
+              <h2>🛒 Savatcha</h2>
+
+              <button className="close-button"
+                onClick={() => setCartOpen(false)}>
+                ×
+              </button>
+            </div>
+
+            {cart.length === 0 ? (
+              <div className="cart-empty">
+                <span>🛒</span>
+                Savatchangiz hozircha bo‘sh.
+              </div>
+            ) : (
+              <>
+                {cart.map(item => (
+                  <div className="cart-item" key={item.id}>
+
+                    <img src={item.image} alt={item.name}/>
+
+                    <div className="cart-item-info">
+                      <h4>{item.name}</h4>
+
+                      <span className="price">
+                        {formatPrice(item.price * item.quantity)}
+                      </span>
+
+                      <div className="quantity">
+                        <button onClick={() =>
+                          changeQuantity(item.id,-1)}>
+                          −
+                        </button>
+
+                        <span>{item.quantity}</span>
+
+                        <button onClick={() =>
+                          changeQuantity(item.id,1)}>
+                          +
+                        </button>
+                      </div>
                     </div>
+
+                    <button className="remove-button"
+                      title="O‘chirish"
+                      onClick={() =>
+                        setCart(previous =>
+                          previous.filter(p => p.id !== item.id)
+                        )}>
+                      🗑
+                    </button>
+
+                  </div>
+                ))}
+
+                <div className="total">
+                  <span>Jami:</span>
+                  <span>{formatPrice(total)}</span>
                 </div>
+
+                <button className="order-button"
+                  onClick={() =>
+                    alert("Buyurtma tizimi hali ulanmagan! Muhammadqodir Gulomov demoday IT bo'yicha Ota-Ona majlisiga web-sayitni taqdim etish uchun tayyorlangan edi")}>
+                  Buyurtma berish
+                </button>
+              </>
+            )}
+
+          </aside>
+        </>
+      )}
+
+      {/* FOOTER */}
+
+      <footer id="about">
+
+        <div className="footer-container">
+
+          <div>
+            <div className="footer-logo">
+              🍕 Bellissimo<br/>
+              <span>Pizza</span>
             </div>
 
-            <div class="product" data-category="pizza">
-                <div class="product-img">
-                    <img src="https://images.unsplash.com/photo-1513104890138-7c749659a591?w=600" alt="Margarita">
-                </div>
-                <div class="product-info">
-                    <h3>Margarita</h3>
-                    <p>Mozzarella, pomidor va maxsus sous.</p>
-                    <div class="product-bottom">
-                        <span class="price">65 000 so'm</span>
-                        <button class="add-btn" onclick="addToCart('Margarita', 65000)">+</button>
-                    </div>
-                </div>
-            </div>
+            <p className="footer-phone">
+              RAQAMGA QO‘NG‘IROQ QILING<br/>
+              <strong>1174</strong>
+            </p>
+          </div>
 
-            <div class="product" data-category="pizza">
-                <div class="product-img">
-                    <img src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=600" alt="Special">
-                </div>
-                <div class="product-info">
-                    <h3>Special Pizza</h3>
-                    <p>Maxsus masalliqlar va pishloq.</p>
-                    <div class="product-bottom">
-                        <span class="price">90 000 so'm</span>
-                        <button class="add-btn" onclick="addToCart('Special Pizza', 90000)">+</button>
-                    </div>
-                </div>
-            </div>
+          <div className="footer-column">
+            <h3>Ma'lumot</h3>
+            <a href="#about">Biz haqimizda</a>
+            <a href="#menu">Menyu</a>
+            <a href="#about">Maxfiylik siyosati</a>
+            <a href="#about">Restoranlar</a>
+          </div>
 
-            <div class="product" data-category="pizza">
-                <div class="product-img">
-                    <img src="https://images.unsplash.com/photo-1579751626657-72bc17010498?w=600" alt="Cheese">
-                </div>
-                <div class="product-info">
-                    <h3>4 Cheese</h3>
-                    <p>To'rt xil pishloq bilan tayyorlangan pizza.</p>
-                    <div class="product-bottom">
-                        <span class="price">85 000 so'm</span>
-                        <button class="add-btn" onclick="addToCart('4 Cheese', 85000)">+</button>
-                    </div>
-                </div>
-            </div>
+          <div className="footer-column">
+            <h3>Hamkorlik</h3>
+            <a href="#about">Biz bilan ishlash</a>
+            <a href="#about">Ish o‘rinlari</a>
+            <a href="#about">Yetkazib berish</a>
+          </div>
 
-            <div class="product" data-category="combo">
-                <div class="product-img">
-                    <img src="https://images.unsplash.com/photo-1571091718767-18b5b1457add?w=600" alt="Combo">
-                </div>
-                <div class="product-info">
-                    <h3>Family Combo</h3>
-                    <p>Pizza, kartoshka va ichimliklar to'plami.</p>
-                    <div class="product-bottom">
-                        <span class="price">150 000 so'm</span>
-                        <button class="add-btn" onclick="addToCart('Family Combo', 150000)">+</button>
-                    </div>
-                </div>
-            </div>
+          <div>
+            <h3 style={{marginBottom:"20px"}}>To‘lov usullari</h3>
 
-            <div class="product" data-category="snack">
-                <div class="product-img">
-                    <img src="https://images.unsplash.com/photo-1573080496219-bb080dd4f877?w=600" alt="Kartoshka">
-                </div>
-                <div class="product-info">
-                    <h3>Fri kartoshka</h3>
-                    <p>Qarsildoq va mazali kartoshka.</p>
-                    <div class="product-bottom">
-                        <span class="price">25 000 so'm</span>
-                        <button class="add-btn" onclick="addToCart('Fri kartoshka', 25000)">+</button>
-                    </div>
-                </div>
+            <div className="footer-payments">
+              <div className="payment payme">
+                Pay<span>me</span>
+              </div>
+              <div className="payment click">CLICK</div>
+              <div className="payment mastercard">🔴 🟠</div>
+              <div className="payment visa">VISA</div>
+              <div className="payment uzcard">UZCARD</div>
             </div>
+          </div>
 
-            <div class="product" data-category="drink">
-                <div class="product-img">
-                    <img src="https://images.unsplash.com/photo-1629203851122-3726ecdf080e?w=600" alt="Ichimlik">
-                </div>
-                <div class="product-info">
-                    <h3>Coca-Cola</h3>
-                    <p>Salqin va mazali ichimlik.</p>
-                    <div class="product-bottom">
-                        <span class="price">15 000 so'm</span>
-                        <button class="add-btn" onclick="addToCart('Coca-Cola', 15000)">+</button>
-                    </div>
-                </div>
-            </div>
+          <div className="footer-social">
+            <h3>Bizni kuzatib boring </h3>
 
-            <div class="product" data-category="dessert">
-                <div class="product-img">
-                    <img src="https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=600" alt="Desert">
-                </div>
-                <div class="product-info">
-                    <h3>Shokoladli tort</h3>
-                    <p>Shokoladli mazali desert.</p>
-                    <div class="product-bottom">
-                        <span class="price">35 000 so'm</span>
-                        <button class="add-btn" onclick="addToCart('Shokoladli tort', 35000)">+</button>
-                    </div>
-                </div>
+            <div className="social-links">
+              <a href="https://www.instagram.com/bellissimouz"
+                 target="_blank" rel="noreferrer">◎</a>
+
+              <a href="https://t.me/bellissimo_bot"
+                 target="_blank" rel="noreferrer">➤</a>
             </div>
+          </div>
 
         </div>
 
-    </section>
-
-    <!-- PROMOTION -->
-
-    <section class="promo">
-
-        <div>
-            <h2>Pizza vaqti keldi! 🍕</h2>
-            <p>Sevimli ta'mingizni tanlang va buyurtma bering.</p>
+        <div className="footer-bottom">
+          © 2016–2026 Bellissimo Pizza. Barcha huquqlar himoyalangan.
         </div>
 
-        <a href="#products">Buyurtma berish →</a>
+      </footer>
 
-    </section>
+    </>
+  );
+}
 
-    <!-- ABOUT -->
+ReactDOM.createRoot(
+  document.getElementById("root")
+).render(<App/>);
 
-    <section class="about" id="about">
-
-        <h2>Biz haqimizda <span>Bellissimo</span></h2>
-
-        <p>
-            Bellissimo Pizza — mazali pizza, sifatli mahsulotlar
-            va ajoyib xizmatni qadrlaydiganlar uchun.
-            Bizning maqsadimiz har bir mijozga unutilmas
-            ta'm va yoqimli taassurot ulashish.
-        </p>
-
-    </section>
-
-    <!-- FOOTER -->
-
-    <footer>
-
-        <div class="footer-grid">
-
-            <div>
-                <h3 class="logo">Bellissimo.</h3>
-                <p>Har bir bo'lakda ajoyib ta'm!</p>
-            </div>
-
-            <div>
-                <h3>Sahifalar</h3>
-                <a href="#home">Bosh sahifa</a>
-                <a href="#categories">Kategoriyalar</a>
-                <a href="#products">Menyu</a>
-                <a href="#about">Biz haqimizda</a>
-            </div>
-
-            <div>
-                <h3>Aloqa</h3>
-                <p>📍 Toshkent, O'zbekiston</p>
-                <p>📞 +998 90 000 00 00</p>
-                <p>🕒 10:00 - 23:00</p>
-            </div>
-
-        </div>
-
-        <div class="copyright">
-            © 2026 Bellissimo Pizza. All rights reserved.
-        </div>
-
-    </footer>
-
-    <!-- CART -->
-
-    <div class="overlay" id="overlay" onclick="closeCart()"></div>
-
-    <div class="cart-panel" id="cart-panel">
-
-        <div class="cart-header">
-            <h2>🛒 Savatcha</h2>
-            <button class="close-cart" onclick="closeCart()">×</button>
-        </div>
-
-        <div class="cart-items" id="cart-items">
-            <p class="empty">Savatcha hozircha bo'sh.</p>
-        </div>
-
-        <div class="cart-total" id="cart-total">
-            Jami: 0 so'm
-        </div>
-
-    </div>
-
-    <!-- JAVASCRIPT -->
-
-    <script>
-
-        let cart = [];
-
-        function addToCart(name, price) {
-
-            let existing = cart.find(item => item.name === name);
-
-            if (existing) {
-                existing.quantity++;
-            } else {
-                cart.push({
-                    name: name,
-                    price: price,
-                    quantity: 1
-                });
-            }
-
-            updateCart();
-
-        }
-
-        function updateCart() {
-
-            let container = document.getElementById("cart-items");
-            let count = document.getElementById("cart-count");
-            let totalElement = document.getElementById("cart-total");
-
-            container.innerHTML = "";
-
-            let total = 0;
-            let quantity = 0;
-
-            if (cart.length === 0) {
-                container.innerHTML =
-                    '<p class="empty">Savatcha hozircha bo\'sh.</p>';
-            }
-
-            cart.forEach((item, index) => {
-
-                total += item.price * item.quantity;
-                quantity += item.quantity;
-
-                container.innerHTML += `
-                    <div class="cart-item">
-                        <div>
-                            <strong>${item.name}</strong>
-                            <p>${item.quantity} x ${item.price.toLocaleString('uz-UZ')} so'm</p>
-                        </div>
-                        <button class="remove-btn"
-                            onclick="removeItem(${index})">O'chirish</button>
-                    </div>
-                `;
-
-            });
-
-            count.innerText = quantity;
-
-            totalElement.innerText =
-                "Jami: " + total.toLocaleString('uz-UZ') + " so'm";
-
-        }
-
-        function removeItem(index) {
-            cart.splice(index, 1);
-            updateCart();
-        }
-
-        function openCart() {
-            document.getElementById("cart-panel").classList.add("open");
-            document.getElementById("overlay").classList.add("show");
-        }
-
-        function closeCart() {
-            document.getElementById("cart-panel").classList.remove("open");
-            document.getElementById("overlay").classList.remove("show");
-        }
-
-        function filterProducts(category, button) {
-
-            document.querySelectorAll(".category").forEach(btn => {
-                btn.classList.remove("active");
-            });
-
-            button.classList.add("active");
-
-            document.querySelectorAll(".product").forEach(product => {
-
-                if (
-                    category === "all" ||
-                    product.dataset.category === category
-                ) {
-                    product.style.display = "block";
-                } else {
-                    product.style.display = "none";
-                }
-
-            });
-
-        }
-
-    </script>
-
+</script>
 </body>
 </html>
